@@ -1,0 +1,42 @@
+{% extends 'template.html' %}
+{% block title %}Editando contato{% endblock %}
+
+
+{% block content %}
+    <div class="content">
+        <h3>Editando contato</h3>
+
+        {% if user.is_authenticated %}
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-4 offset-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title text-center">Editar informações</h4>
+                                <form action="{% url 'validate_new_contact' contact.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <!-- <input type="hidden" name="contact_id" value=""> -->
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="name" class="form-control" id="floatingInput" value="{{ contact.name }}" placeholder="" required>
+                                        <label for="floatingInput">Nome</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" name="email" class="form-control" id="floatingEmail" value="{{ contact.email }}" placeholder="" required>
+                                        <label for="floatingEmail">E-mail</label>
+                                    </div>
+                                    <div class="form-floating mb-4">
+                                        <input type="tel" name="phone" class="form-control" id="floatingPhone" value="{{ contact.phone }}" placeholder="" required>
+                                        <label for="floatingPhone">Telefone</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-lg btn-success form-control">Alterar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Faça o login para criar novos contatos.</p>
+        {% endif %}
+    </div>
+{% endblock %}

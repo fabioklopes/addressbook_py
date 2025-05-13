@@ -1,0 +1,57 @@
+{% extends 'template.html' %}
+{% block title %}Detalhes{% endblock %}
+
+{% block content %}
+    <div class="content">
+        {% if user.is_authenticated %}
+            <div class="card">
+                <div class="card-header">
+                    <h3>Detalhes de {{ contact.name }}</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><b>Email:</b> <a href="#">{{ contact.email }}</a></p>
+                    <p class="card-text"><b>Telefone:</b> {{ contact.phone }}</p>
+                    <p class="card-text"><b>Cadastrado em:</b> {{ contact.created_at }}</p>
+                    <p class="card-text"><b>Contato criado por:</b> {{ contact.created_by }}</p>
+                    
+                    <hr>
+                    
+                    <a href="{% url 'contacts' %}" class="btn btn-info"><i class="bi bi-arrow-return-left"></i></a>
+                    <a href="{% url 'edit_contact' contact.id %}" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></a>
+
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Removendo contato...</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Tem certeza que deseja remover <b>{{ contact.name }}</b> da sua lista de contatos?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</a>
+                                    <a href="{% url 'delete_contact' contact.id %}" class="btn btn-danger">Confirmar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Faça o login para visualizar os contatos.</p>
+        {% endif %}
+    </div>
+
+
+
+{% endblock %}

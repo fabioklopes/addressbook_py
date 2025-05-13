@@ -1,0 +1,41 @@
+{% extends 'template.html' %}
+{% block title %}Novo contato{% endblock %}
+
+
+{% block content %}
+    <div class="content">
+        <h3>Novo contato</h3>
+
+        {% if user.is_authenticated %}
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-4 offset-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title text-center">Preencha os dados</h4>
+                                <form action="{% url 'validate_new_contact' %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="name" class="form-control" id="floatingInput" placeholder="" required>
+                                        <label for="floatingInput">Nome</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="" required>
+                                        <label for="floatingEmail">E-mail</label>
+                                    </div>
+                                    <div class="form-floating mb-4">
+                                        <input type="tel" name="phone" class="form-control" id="floatingPhone" placeholder="" required>
+                                        <label for="floatingPhone">Telefone</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-lg btn-primary form-control">Cadastrar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Faça o login para criar novos contatos.</p>
+        {% endif %}
+    </div>
+{% endblock %}
