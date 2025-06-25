@@ -1,8 +1,10 @@
+# DENIED
 *.log
 *.git
 *.gitignore
 *.idea
 *.secret
+*.venv
 
+# ALLOWED
 !teste.log
-!.venv
