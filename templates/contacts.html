@@ -39,7 +39,7 @@
                             <td>{{ c.phone }}</td>
                             <td class="align-center">
                                 <a href="{% url 'view_contact' c.id %}"><i class="bi bi-eye-fill"></i></a>
-                                <a href="#"><i class="bi bi-whatsapp"></i></a>
+                                <a href="https://web.whatsapp.com/send?phone={{ c.phone }}" target="_blank"><i class="bi bi-whatsapp"></i></a>
                             </td>
                         </tr>
                     {% endfor %}

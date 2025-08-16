@@ -31,7 +31,6 @@ def contacts(request):
     paginator = Paginator(contact_list, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-
     return render(request, 'contacts.html', {"contact_list": contact_list, "page": page})
 
 
@@ -45,9 +44,9 @@ def validate_new_contact(request):
         email = request.POST['email'],
         phone = request.POST['phone']
     )
+    messages.success(request, 'Contato adicionado com sucesso.')
     contato.save()
-    
-    return redirect('/')
+    return redirect('contacts')
 
 
 def security(request):

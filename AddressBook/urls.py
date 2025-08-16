@@ -5,6 +5,7 @@ from contatos import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('', views.contacts, name='principal'),
     path('contacts/', views.contacts, name='contacts'),
     path('new_contact/', views.new_contact, name='new_contact'),
