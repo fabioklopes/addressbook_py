@@ -39,13 +39,28 @@ def new_contact(request):
 
 
 def validate_new_contact(request):
-    contato = Contact(
-        name = request.POST['name'],
-        email = request.POST['email'],
-        phone = request.POST['phone']
-    )
-    messages.success(request, 'Contato adicionado com sucesso.')
-    contato.save()
+    id = request.POST.get('id')
+    name = request.POST['name']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    if id and Contact.objects.filter(id=id).exists():
+        # Atualiza contato existente
+        contato = Contact.objects.get(id=id)
+        contato.name = name
+        contato.email = email
+        contato.phone = phone
+        contato.save()
+        messages.success(request, 'Contato atualizado com sucesso.')
+    else:
+        # Cria novo contato
+        contato = Contact(
+            name=name,
+            email=email,
+            phone=phone,
+            created_by=request.user.username if hasattr(request, 'user') and request.user.is_authenticated else 'anon'
+        )
+        contato.save()
+        messages.success(request, 'Contato adicionado com sucesso.')
     return redirect('contacts')
 
 
@@ -76,6 +91,16 @@ def view_contact(request, id):
 
 def edit_contact(request, id):
     contact = Contact.objects.get(id=id)
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        contact.name = name
+        contact.email = email
+        contact.phone = phone
+        contact.save()
+        messages.success(request, 'Contato atualizado com sucesso.')
+        return redirect('contacts')
     return render(request, 'edit_contact.html', {'contact': contact})
 
 
